@@ -22,12 +22,12 @@ makeList: Helper function, turns a tag's given values into a list
 	- ARG 'names': List of elements of interest
 	- OUTPUT: list of tag values
 
-xmlToCSV: Format an XML file and save in a CSV
+xmlToCSV: Format an xml file and save in a CSV
 	- ARG 'xmlfile': XML file of interest
 	- ARG 'csvfile': Output file
 	- OUTPUT: saves CSV with XML data 
 
-directoryToCSV: Format a directory of XML files into one CSV 
+directoryToCSV: Format a directory of CSV files into one CSV 
 	- ARG 'directory': Folder containing the XML files
 	- ARG 'outFileName': Name of output CSV file 
 	- OUTPUT: saves CSV with XML data
@@ -145,7 +145,7 @@ def writeURLs(year, location):
 						'STL':'sln', 'PIT':'pit', 'CHC':'chn', 'MIL':'mil', 'CIN':'cin',
 						'LAD':'lan', 'SFG':'sfn', 'ARI':'ari','SDP':'sdn', 'COL':'col'}
 
-	fileFull = location + '/' + \
+	fileFull = location + '/urls' + \
 	    str(year) + '.txt'
 
 	allURLs = []
@@ -219,7 +219,7 @@ def scrapeURLs(URLFileName, saveDir, verbose):
 def makeList(tag, names):
 	outList = []
 	for i in names:
-		outList.append(str(tag.get(i, 'NULL')).replace(',', ''))
+		outList.append(str(tag.get(i, 'NULL')).strip().replace(',', ''))
 	return(outList)
 
 
@@ -261,7 +261,7 @@ def xmlToCSV(xmlfile, csvfile):
 			for k in j.find_all('pitch'):
 				pitchData = makeList(k, cols_pitch)
 				fullLine = inningData + abData + pitchData
-				dataLines.append(str(fullLine).strip('[]').replace("'", "") + '\n')
+				dataLines.append(str(fullLine).strip('[]').replace("'", "").replace(", ", ",").replace("NULL","") + '\n')
 
 		# Go through the bottom of the inning (if present), collect data on AB and pitch
 		try:
@@ -270,7 +270,7 @@ def xmlToCSV(xmlfile, csvfile):
 				for k in j.find_all('pitch'):
 					pitchData = makeList(k, cols_pitch)
 					fullLine = inningData + abData + pitchData
-					dataLines.append(str(fullLine).strip('[]').replace("'", "") + '\n')
+					dataLines.append(str(fullLine).strip('[]').replace("'", "").replace(", ", ",").replace("NULL","") + '\n')
 		except:
 			pass
 
@@ -292,10 +292,10 @@ def directoryToCSV(directory, outFileName):
 
 
 
-	numFiles = len(os.listdir(foldName))
+	numFiles = len(os.listdir(directory))
 	j = 1
 
-	for i in os.listdir(foldName):
+	for i in os.listdir(directory):
 		if not i.startswith('.'):
 			fullPath = directory + '/' + i
 			xmlToCSV(fullPath, outFile)
