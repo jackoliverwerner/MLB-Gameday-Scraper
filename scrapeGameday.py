@@ -229,7 +229,8 @@ def xmlToCSV(xmlfile, csvfile):
 	cols_inning = ['num', 'away_team', 'home_team']
 
 	cols_ab = ['num', 'b', 's', 'o', 'start_tfs', 'batter', 'stand', 
-	'b_height', 'pitcher', 'p_throws', 'event']
+	'b_height', 'pitcher', 'p_throws', 'event', 'home_team_runs', 
+	'away_team_runs']
 
 	cols_pitch = ['des', 'id', 'type', 'x', 'y', 'start_speed', 'end_speed',
 	'sz_top', 'sz_bot', 'pfx_x', 'pfx_z', 'px', 'pz', 'x0', 'y0', 'z0', 
@@ -285,6 +286,7 @@ def directoryToCSV(directory, outFileName):
 	
 	outFile.write('gid, inning, away_team, home_team, half_inning, ab_num, b, s, o, ' +
 		'start_tfs, batter, b_hand, b_height, pitcher, p_throws, event, ' +
+		'home_team_runs, away_team_runs, ' +
 		'pitch_result, id, type, x, y, start_speed, end_speed,  sz_top, ' +
 		'sz_bot, pfx_x, pfx_z, px, pz, x0, y0, z0, vx0, vy0, vz0, ax, ay, ' +
 		'az, break_y, break_angle, break_length, pitch_type, type_confidence, ' +
